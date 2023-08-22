@@ -4,7 +4,7 @@ vim.g.maplocalleader = "\\"
 
 local opt = vim.opt
 
-opt.autowrite = true -- Enable auto write
+opt.autowrite = false -- Enable auto write
 opt.clipboard = "unnamedplus" -- Sync with system clipboard
 opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 3 -- Hide * markup for bold and italic
@@ -34,7 +34,7 @@ opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift t
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
 opt.spelllang = { "en" }
-opt.splitbelow = true -- Put new windows below current
+opt.splitbelow = false -- Put new windows below current
 opt.splitright = true -- Put new windows right of current
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.termguicolors = true -- True color support
