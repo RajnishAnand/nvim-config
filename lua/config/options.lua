@@ -1,8 +1,13 @@
--- This file is automatically loaded by plugins.core
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+-- vim options
+
 
 local opt = vim.opt
+local g = vim.g;
+
+g.mapleader = " "
+g.maplocalleader = " "
+g.loaded_netrw = 1  -- disable default netrw for nvim tree
+g.loaded_netrwPlugin = 1 
 
 opt.autowrite = false -- Enable auto write
 opt.clipboard = "unnamedplus" -- Sync with system clipboard
