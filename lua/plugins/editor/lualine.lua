@@ -19,7 +19,7 @@ local diff = {
 }
 
 local filetype = {"filetype", colored = false, icon = { align = 'right' }}
-local branch = { "branch", icons_enabled = true, icon = "",}
+local branch = { "branch", icons_enabled = true, icon = "",}
 local location = { "location", padding = 0 }
 
 -- progress bar
