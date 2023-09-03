@@ -5,6 +5,9 @@ return {
     plugins = { spelling = true },
     defaults = {
       mode = { "n", "v" },
+      { "<leader>u", desc = "+Ui"},
+      { "<leader>x", desc = "+Diagnostics/quickfix" },
+      { "<leader>s", desc = "+Search" }
    },
   },
   config = function(_, opts)
