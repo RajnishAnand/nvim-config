@@ -2,9 +2,16 @@ return {
   "nvim-tree/nvim-tree.lua",
   version = "*",
   lazy = false,
-  dependencies = {
-    "nvim-tree/nvim-web-devicons",
+  dependencies = { "nvim-tree/nvim-web-devicons"},
+
+  keys = {
+    {
+      "<leader>e", 
+      function() vim.cmd[[NvimTreeToggle]] end,
+      desc = "File Explorer"
+    }
   },
+
   config = function()
     require("nvim-tree").setup {
 
