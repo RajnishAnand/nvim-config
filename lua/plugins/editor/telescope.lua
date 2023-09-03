@@ -6,7 +6,7 @@ return {
   -- version = false, -- telescope did only one release, so use HEAD for now
   keys = {
     -- find
-    {"<leader>f", desc = "Find"},
+    {"<leader>f", desc = "+Find"},
     { "<leader>fb", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
     { "<leader>fc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
     { "<leader>fC", "<cmd>Telescope commands<cr>", desc = "Commands" },
