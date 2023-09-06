@@ -3,11 +3,15 @@ return {
   event = "VeryLazy",
   opts = {
     plugins = { spelling = true },
+    window = {
+      border = "single", -- none, single, double, shadow
+      position = "bottom", -- bottom, top
+    },
     defaults = {
-      mode = { "n", "v" },
+      mode =  "n" ,
       { "<leader>u", desc = "+Ui"},
       { "<leader>x", desc = "+Diagnostics/quickfix" },
-      { "<leader>s", desc = "+Search" }
+      { "<leader>s", desc = "+Search" },
    },
   },
   config = function(_, opts)
