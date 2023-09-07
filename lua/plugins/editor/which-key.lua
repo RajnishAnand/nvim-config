@@ -9,9 +9,15 @@ return {
     },
     defaults = {
       mode =  "n" ,
-      { "<leader>u", desc = "+Ui"},
-      { "<leader>x", desc = "+Diagnostics/quickfix" },
-      { "<leader>s", desc = "+Search" },
+      prefix = "<leader>",
+      [ "u" ] = { name = "+Ui" },
+      [ "f" ] = { name = "+Find" },
+      [ "x" ] = { name = "+Diagnostics/quickfix" },
+      [ "s" ] = { name = "+Search" },
+      [ "b" ] = { name = "+Buffer" },
+
+      [ "q" ] = { "<cmd>q<CR>", "Exit" },
+      [ "w" ] = { "<cmd>w<CR>", "Save" },
    },
   },
   config = function(_, opts)

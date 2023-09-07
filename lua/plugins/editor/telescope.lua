@@ -6,7 +6,6 @@ return {
   -- version = false, -- telescope did only one release, so use HEAD for now
   keys = {
     -- find
-    {"<leader>f", desc = "+Find"},
     { "<leader>fb", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
     { "<leader>fc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
     { "<leader>fC", "<cmd>Telescope commands<cr>", desc = "Commands" },
@@ -14,6 +13,7 @@ return {
     { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
     { "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
     { "<leader>fR", "<cmd>Telescope oldfiles<cr>", desc = "Recent Files" },
+    { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Recent Files" },
 
     -- search
     --
