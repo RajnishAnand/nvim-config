@@ -4,6 +4,11 @@
 local opt = vim.opt
 local g = vim.g;
 
+-- indentation
+opt.list = true
+opt.listchars:append "space:⋅"
+opt.listchars:append "eol:↴"
+
 g.mapleader = " "
 g.maplocalleader = " "
 g.loaded_netrw = 1  -- disable default netrw for nvim tree
