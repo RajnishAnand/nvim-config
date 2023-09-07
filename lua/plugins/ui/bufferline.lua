@@ -7,7 +7,6 @@ return {
   event = "VeryLazy",
 
   keys = {
-    { "<leader>b", desc = "+Buffer" },
     { "<leader>bd", "<Cmd>bdelete<CR>", desc = "Delete current buffer"},
     { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
     { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
