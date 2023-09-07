@@ -17,14 +17,15 @@ require("lazy").setup({
     { import = "plugins.colorscheme" },
     { import = "plugins.editor" },
     { import = "plugins.ui" },
+    { import = "plugins.utils" },
     -- { import = "plugins" },
   },
+  ui = { border = "single" },
   defaults = {
     lazy = true, -- all plugins to be lazyloaded by default
 
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
-
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
