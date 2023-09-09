@@ -10,5 +10,5 @@ return {
   },
 
   -- automatically loads last session
-  init = function () require("persistence").load() end
+  -- init = function () require("persistence").load() end
 }
