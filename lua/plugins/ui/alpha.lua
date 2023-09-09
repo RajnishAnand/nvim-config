@@ -3,10 +3,12 @@
 
 return {
   "goolord/alpha-nvim",
+  event = "VimEnter",
+
   config = function()
     local dashboard = require("alpha.themes.dashboard")
 
-    local username = "@ablsolutezero"
+    local username = "@" .. (vim.env.USER or vim.env.USERNAME)
     local logo = {
       [[                               __                ]],
       [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
@@ -22,7 +24,7 @@ return {
     dashboard.section.buttons.val = {
       dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
       dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
+      dashboard.button("l", "  Last Session", "<cmd>lua require('persistence').load() <CR>"),
       dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
       dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
       dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
@@ -38,4 +40,6 @@ return {
 
     require("alpha").setup(dashboard.opts)
   end,
+
+  keys = { { "<leader>a", "<cmd>Alpha<CR>", desc =  "Alpha (dashboard)" } }
 }
