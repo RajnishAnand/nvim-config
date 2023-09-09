@@ -7,8 +7,8 @@ return {
 
   config = function()
     local dashboard = require("alpha.themes.dashboard")
-
-    local username = "@" .. (vim.env.USER or vim.env.USERNAME)
+    -- FIX: Find how to get username in termux 
+    local username = "@" .. (vim.env.USER or vim.env.USERNAME or "user")
     local logo = {
       [[                               __                ]],
       [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
