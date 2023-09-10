@@ -27,7 +27,7 @@ return {
       dashboard.button("l", "  Last Session", "<cmd>lua require('persistence').load() <CR>"),
       dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
       dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-      dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+      dashboard.button("c", "  Configuration", ":e " .. vim.fn.stdpath("config") .." <CR>"),
       dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
     }
 
