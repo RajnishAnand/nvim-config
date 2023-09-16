@@ -4,10 +4,9 @@
 local opt = vim.opt
 local g = vim.g;
 
--- indentation
 opt.list = true
-opt.listchars:append "space:⋅"
-opt.listchars:append "eol:↴"
+-- opt.listchars:append "space:⋅" -- space visibility
+opt.listchars:append "eol:↴" -- enter key visibility
 
 g.mapleader = " "
 g.maplocalleader = " "
@@ -60,6 +59,14 @@ if vim.fn.has("nvim-0.9.0") == 1 then
   opt.splitkeep = "screen"
   opt.shortmess:append({ C = true })
 end
+
+-- set default shell to powershell 7 on windows
+-- if vim.fn.has("win32") or vim.fn.has("win64") then
+--   vim.cmd[[set shell=pwsh]]
+--   vim.cmd[[set shellcmdflag=-command]]
+--   vim.cmd[[set shellquote=\"]]
+--   vim.cmd[[set shellxquote=]]
+-- end
 
 -- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
