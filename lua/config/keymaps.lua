@@ -19,7 +19,7 @@ map("n", "<S-h>", "<cmd>bprevious<cr>", "Prev buffer" )
 map("n", "<S-l>", "<cmd>bnext<cr>", "Next buffer" )
 
 -- Clear search with <esc>
--- map("n", "<esc>", "<cmd>noh<cr><esc>", "Escape and clear hlsearch" )
+map("n", "<leader>uh", "<cmd>noh<cr><esc>", "Clear hlsearch" )
 
 -- lazy
 map("n", "<leader>l", "<cmd>Lazy<CR>", "Lazy"); 
