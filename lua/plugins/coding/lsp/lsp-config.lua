@@ -126,7 +126,7 @@ return {
     -- diagnostics 
     vim.diagnostic.config(opts.diagnostics)
     for _, sign in ipairs(opts.signs) do
-	  	vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+	  	vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
 	  end
 
   end,
