@@ -6,7 +6,7 @@ return {
 
   keys = {
     {
-      "<leader>e", 
+      "<leader>e",
       function() vim.cmd[[NvimTreeToggle]] end,
       desc = "File Explorer"
     }
@@ -36,7 +36,7 @@ return {
         view = {
           width = 25,
           cursorline = true,
-          hide_root_folder = false,
+          -- hide_root_folder = false,
           side = "left",
           adaptive_size = true,
           number = false,
