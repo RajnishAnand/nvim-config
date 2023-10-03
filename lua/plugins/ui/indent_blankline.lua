@@ -3,26 +3,30 @@
 
 return {
   "lukas-reineke/indent-blankline.nvim",
+  main = "ibl",
   event = { "BufReadPost", "BufNewFile" },
   opts = {
-    --char = "▏",
-    char = "│",
-    filetype_exclude = {
-      "help",
-      "alpha",
-      "dashboard",
-      -- "neo-tree",
-      "Trouble",
-      "lazy",
-      "mason",
-      "notify",
-      "toggleterm",
-      "lazyterm",
+    indent = { char = "│" },
+
+    scope = {
+      enabled = true,
+      char = "│",
+      show_start = false,
     },
 
-    show_end_of_line = true,
-    space_char_blankline = " ",
-    show_current_context = true,
-    -- show_current_context_start = true,
+    exclude = {
+      filetypes = {
+        "help",
+        "alpha",
+        "dashboard",
+        -- "neo-tree",
+        "Trouble",
+        "lazy",
+        "mason",
+        "notify",
+        "toggleterm",
+        "lazyterm",
+      }
+    },
   }
 }
