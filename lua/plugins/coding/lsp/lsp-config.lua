@@ -67,7 +67,7 @@ return {
     -- lspInfo enable border
     require('lspconfig.ui.windows').default_options.border = 'single';
     -- automaic floating diagnostic
-    vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
+    -- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 
     -- LSP settings (for overriding per client)
     local handlers =  {
