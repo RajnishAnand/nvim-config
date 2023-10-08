@@ -4,6 +4,7 @@
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
+  lazy = true,
 
   dependencies = {
     -- configuration manager 
@@ -21,31 +22,32 @@ return {
 
     -- line diagnostic sings 
     signs = {
-	  	{ name = "DiagnosticSignError", text = "" },
-	  	{ name = "DiagnosticSignWarn", text = "" },
-	  	{ name = "DiagnosticSignHint", text = "" },
-	  	{ name = "DiagnosticSignInfo", text = "" },
-	  },
+      { name = "DiagnosticSignError", text = "" },
+      { name = "DiagnosticSignWarn", text = "" },
+      { name = "DiagnosticSignHint", text = "" },
+      { name = "DiagnosticSignInfo", text = "" },
+    },
 
     -- options for vim.diagnostic.config()
     diagnostics = {
       underline = true,
       update_in_insert = false,
       severity_sort = true,
-		  -- signs = { active = signs }, -- show sings
-      virtual_text = {
-        spacing = 4,
-        source = "if_many",
-        -- prefix = "●",
+      -- signs = { active = signs }, -- show sings
+      -- virtual_text = {
+      --   spacing = 4,
+      --   source = "if_many",
+      --   -- prefix = "●",
+      -- },
+      virtual_text = false,
+      float = {
+        focusable = true,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
       },
-		  float = {
-		  	focusable = true,
-		  	style = "minimal",
-		  	border = "rounded",
-		  	source = "always",
-		  	header = "",
-		  	prefix = "",
-		  },
     },
 
 
@@ -57,71 +59,41 @@ return {
     -- inlay_hints = {
     --   enabled = false,
     -- },
-    --
-    -- -- add any global capabilities here
-    -- capabilities = {},
-    -- -- Automatically format on save
-    -- autoformat = false,
-    -- -- Useful for debugging formatter issues
-    -- format_notify = false,
-    --
-    -- -- options for vim.lsp.buf.format
-    -- -- `bufnr` and `filter` is handled by the LazyVim formatter,
-    -- -- but can be also overridden when specified
-    -- format = {
-    --   formatting_options = nil,
-    --   timeout_ms = nil,
-    -- },
-    --
-    -- -- LSP Server Settings
-    -- ---@type lspconfig.options
-    -- servers = {
-    --   jsonls = {},
-    --   lua_ls = {
-    --     -- Use this to add any additional keymaps
-    --     -- for specific lsp servers
-    --     ---@type LazyKeys[]
-    --     -- keys = {},
-    --     settings = {
-    --       Lua = {
-    --         workspace = { checkThirdParty = false },
-    --         completion = { callSnippet = "Replace", },
-    --       },
-    --     },
-    --   },
-    -- },
-    --
-    -- -- you can do any additional lsp server setup here
-    -- -- return true if you don't want this server to be setup with lspconfig
-    -- ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-    -- setup = {
-    --   -- example to setup with typescript.nvim
-    --   -- tsserver = fu;nction(_, opts)
-    --   --   require("typescript").setup({ server = opts })
-    --   --   return true
-    --   -- end,
-    --   -- Specify * to use this function as a fallback for any server
-    --   -- ["*"] = function(server, opts) end,
-    -- },
+
   },
 
   config = function(_, opts)
+
+    -- lspInfo enable border
+    require('lspconfig.ui.windows').default_options.border = 'single';
+    -- automaic floating diagnostic
+    vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
+
+    -- LSP settings (for overriding per client)
+    local handlers =  {
+      ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
+      ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+    }
+
+
+    -- --
     local options = {
       mason = require ("plugins.coding.lsp.mason").opts,
       mason_lspconfig = require ("plugins.coding.lsp.mason-lspconfig").opts
     }
 
-    require ("mason").setup(options.mason)
-    local mason_lspconfig = require ("mason-lspconfig")
-    local lspconfig = require("lspconfig")
-
+    require ("mason").setup(options.mason) local mason_lspconfig = require ("mason-lspconfig") local lspconfig = require("lspconfig")
     mason_lspconfig.setup(options.mason_lspconfig)
     local installed_servers = mason_lspconfig.get_installed_servers()
 
+    -- --
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
     for _, server in pairs(installed_servers) do
-      lspconfig[server].setup({})
+      lspconfig[server].setup({
+        capabilities = capabilities,
+        handlers = handlers
+      })
     end
-
 
     -- diagnostics 
     vim.diagnostic.config(opts.diagnostics)
@@ -130,4 +102,15 @@ return {
 	  end
 
   end,
+
+  keys = {
+    { "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
+    { "gl", vim.diagnostic.open_float, desc= "Line Diagnostic"},
+    { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
+    { "K", vim.lsp.buf.hover, desc = "Hover" },
+
+    -- { "<leader>cf", format, desc = "Format Document", has = "formatting" },
+    -- { "<leader>cf", format, desc = "Format Range", mode = "v", has = "rangeFormatting" },
+    -- { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
+  }
 }
