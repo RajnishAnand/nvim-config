@@ -22,4 +22,8 @@ map("n", "<S-l>", "<cmd>bnext<cr>", "Next buffer" )
 map("n", "<leader>uh", "<cmd>noh<cr><esc>", "Clear hlsearch" )
 
 -- lazy
-map("n", "<leader>l", "<cmd>Lazy<CR>", "Lazy"); 
+map("n", "<leader>l", "<cmd>Lazy<CR>", "Lazy");
+
+-- fast escape
+map('i', 'jk', '<Esc>')
+map('t', 'jk', [[<C-\><C-n>]])
