@@ -91,7 +91,7 @@ return {
                   ignored = "◌",
                   -- change type
                   renamed = "➜",
-                  deleted = "󰧧",
+                  deleted = "",
                 },
             },
           },
