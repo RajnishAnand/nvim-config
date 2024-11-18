@@ -8,10 +8,6 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
   spec = {
-    -- { "folke/lazy.nvim", version = "*" },
-
-    -- default LazyVim plugins
-    -- { "LazyVim/LazyVim", import = "lazyvim.plugins" },
 
     -- import plugin directories here
     { import = "plugins.colorscheme" },
@@ -20,7 +16,6 @@ require("lazy").setup({
     { import = "plugins.utils" },
     { import = "plugins.coding" },
     { import = "plugins.coding.lsp" },
-    -- { import = "plugins" },
   },
   ui = { border = "single" },
   defaults = {
@@ -32,7 +27,7 @@ require("lazy").setup({
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = { enabled = false }, -- automatically check for plugin updates
   performance = {
     rtp = {
       -- disable some rtp plugins

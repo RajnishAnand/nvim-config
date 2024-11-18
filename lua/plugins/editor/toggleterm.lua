@@ -1,6 +1,20 @@
 -- toggleterm.nvim
 -- https://github.com/akinsho/toggleterm.nvim
 
+local conf = {
+  shell = function ()
+    -- set default shell to powershell 7 on windows
+    if vim.fn.has("win32") or vim.fn.has("win64") then
+      if vim.fn.executable("pwsh.exe") then
+        return "pwsh.exe"
+      elseif vim.fn.executable("powershell") then
+        return "powershell.exe"
+      end
+    end
+    return vim.o.shell
+  end
+}
+
 return {
   'akinsho/toggleterm.nvim',
   version = "*",
@@ -8,29 +22,29 @@ return {
   opts = {
     --[[ things you want to change go here]]
     size = 20,
-	  open_mapping = [[<c-t>]],
-	  hide_numbers = true,
-	  shade_filetypes = {},
-	  shade_terminals = true,
-	  shading_factor = 2,
-	  start_in_insert = true,
-	  insert_mappings = true,
-	  persist_size = true,
-	  direction = "float",
-	  close_on_exit = true,
-	  shell = vim.o.shell,
-	  float_opts = {
-	  	border = "curved",
-	  	winblend = 0,
-	  	highlights = {
-	  		border = "Normal",
-	  		background = "Normal",
-	  	},
-	  }
+    open_mapping = [[<c-t>]],
+    hide_numbers = true,
+    shade_filetypes = {},
+    shade_terminals = true,
+    shading_factor = 2,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = "float",
+    close_on_exit = true,
+    shell = conf.shell(),
+    float_opts = {
+      border = "curved",
+      winblend = 0,
+      highlights = {
+        border = "Normal",
+        background = "Normal",
+    },
+    }
   },
 
-  config = function (_, opts) 
-    require("toggleterm").setup(opts);
+  config = function (_, options)
+    require("toggleterm").setup(options);
 
     vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()');
     function _G.set_terminal_keymaps()
@@ -57,15 +71,15 @@ return {
     -- ncdu: NCurses Disk Usage
     local ncdu = Terminal:new({ cmd = "ncdu", hidden = true })
     function _NCDU_TOGGLE() ncdu:toggle() end
-    
+
     -- htop: process viewer
     local htop = Terminal:new({ cmd = "htop", hidden = true })
     function _HTOP_TOGGLE() htop:toggle() end
-    
+
     --   nnn: file manager
     local nnn = Terminal:new({ cmd = "nnn", hidden = true })
     function _NNN_TOGGLE() nnn:toggle() end
-    
+
     -- python: Interpreter
     local python = Terminal:new({ cmd = "python", hidden = true })
     function _PYTHON_TOGGLE() python:toggle() end
@@ -73,6 +87,7 @@ return {
   end,
 
   keys = {
+    {"<leader>t", desc = "+Terminal"},
     { "<leader>tn", "<cmd>lua _NODE_TOGGLE()<cr>", desc = "Node" },
     { "<leader>tg", "<cmd>lua _LAZYGIT_TOGGLE()<cr>", desc = "lazygit" },
     { "<leader>tu", "<cmd>lua _NCDU_TOGGLE()<cr>", desc = "NCDU" },
@@ -85,8 +100,4 @@ return {
     { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc =  "Vertical Terminal" },
   }
 }
-
-
-
-
 

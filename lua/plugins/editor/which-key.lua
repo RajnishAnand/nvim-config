@@ -1,28 +1,45 @@
+
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
-  opts = {
-    plugins = { spelling = true },
-    window = {
-      border = "single", -- none, single, double, shadow
-      position = "bottom", -- bottom, top
-    },
-    defaults = {
-      mode =  "n" ,
-      prefix = "<leader>",
-      [ "u" ] = { name = "+Ui" },
-      [ "f" ] = { name = "+Find" },
-      [ "x" ] = { name = "+Diagnostics/quickfix" },
-      [ "s" ] = { name = "+Search" },
-      [ "b" ] = { name = "+Buffer" },
 
-      [ "q" ] = { "<cmd>q<CR>", "Exit" },
-      [ "w" ] = { "<cmd>w<CR>", "Save" },
-   },
+  opts = {
+    preset = "classic",
+    plugins = { spelling = true },
+    win = {
+      no_overlap = false,
+      border = "single", -- none, single, double, shadow
+    },
+
+    spec = {
+      {
+        mode =  "n" ,
+         { "<leader>u", group = "+Ui" },
+         { "<leader>c", group = "+LSP", icon="" },
+         { "<leader>f", group = "+Find" },
+         { "<leader>x", group = "+Diagnostics/quickfix" },
+         -- { "<leader>s", group = " +Search" },
+         { "<leader>b", group = "+Buffer" },
+         { "<leader>t", group = "+Terminal" },
+      },
+      -- {
+        -- Nested mappings are allowed and can be added in any order
+        -- Most attributes can be inherited or overridden on any level
+        -- There's no limit to the depth of nesting
+        -- mode = { "n", "v" }, -- NORMAL and VISUAL mode
+        -- { "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- no need to specify mode since it's inherited
+        -- { "<leader>w", "<cmd>w<cr>", desc = "Write", },
+      -- }
+    }
+
   },
-  config = function(_, opts)
-    local wk = require("which-key")
-    wk.setup(opts)
-    wk.register(opts.defaults)
-  end,
+  keys = {
+    {
+      "<leader>?",
+      function()
+        require("which-key").show({ global = false })
+      end,
+      desc = "Local Keymaps",
+    },
+  },
 }

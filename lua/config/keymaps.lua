@@ -1,12 +1,16 @@
 -- keymaps
 -- TODO: checkout lazyVim keymaps 
--- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- https://github.com/LaqqzyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 
 local map = function (mode, lhs, rhs, desc)
-  opts = { desc = desc , remap = true };
+  local opts = { desc = desc , noremap = true };
   vim.keymap.set(mode, lhs, rhs, opts);
 end
 
+
+-- save and exit
+map("n", "<leader>w", "<cmd>w<CR>", "Write");
+map("n", "<leader>q", "<cmd>q!<CR>", "Quit");
 
 -- Move to window using the <ctrl> hjkl keys
 map("n", "<C-h>", "<C-w>h", "Go to left window" )

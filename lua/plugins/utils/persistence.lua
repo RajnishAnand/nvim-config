@@ -5,7 +5,7 @@ return {
   "folke/persistence.nvim",
   event = "BufReadPre", -- this will only start session saving when an actual file was opened
   opts = {
-    options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+    options = { "buffers", "curdir", "folds", "globals", "localoptions", "options", "tabpages", "winpos", "winsize"}, -- sessionoptions used for saving
     pre_save = nil, -- a function to call before saving the session
   },
 
