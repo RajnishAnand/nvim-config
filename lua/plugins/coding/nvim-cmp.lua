@@ -10,12 +10,13 @@ return {
     "hrsh7th/cmp-buffer", -- buffer 
     "hrsh7th/cmp-path", -- path
     "saadparwaiz1/cmp_luasnip", -- snippets
-    -- TODO: try codium  AI : https://github.com/jcdickinson/codeium.nvim
+    "Exafunction/codeium.nvim", -- AI completion
 
     "onsails/lspkind.nvim", -- lsp icons
     "nvim-tree/nvim-web-devicons"
   },
 
+  
   opts = function()
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
     local cmp = require("cmp")
@@ -69,9 +70,10 @@ return {
             fallback()
           end
         end, { 'i', 's' }),
-     },
+      },
 
       sources = cmp.config.sources({
+        { name = "codeium" },
         { name = "nvim_lsp" },
         { name = "luasnip" },
         { name = "buffer" },
@@ -79,31 +81,39 @@ return {
       }),
 
       formatting = {
-        fields = { "kind", "abbr", "menu" },
-        format = function(entry, vim_item)
-
-          -- king icons
-          if vim.tbl_contains({ 'path' }, entry.source.name) then
-            local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
-            if icon then
-              vim_item.kind = icon
-              vim_item.kind_hl_group = hl_group
-              return vim_item
+        fields = {"menu", "abbr", "kind"},
+        format = require('lspkind').cmp_format({
+          mode = "symbol_text",
+          maxwidth = {
+            menu = 50,
+            abbr = 50
+          },
+          ellipsis_char = "...",
+          symbol_map = { Codeium = ""},
+          before = function(entry, vim_item)
+            -- kind icons
+            if vim.tbl_contains({ 'path' }, entry.source.name) then
+              local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+              if icon then
+                vim_item.kind = icon
+                vim_item.kind_hl_group = hl_group
+                return vim_item
+              end
             end
+            -- source icons
+            vim_item.menu = ({
+              -- copilot =  " Copilot",
+              nvim_lsp = "⌘",
+              luasnip =  "",
+              buffer =   "𝌎",
+              path =     "⎇ ",
+              rg =       "",
+              codeium =  ""
+            })[entry.source.name]
+            return vim_item
           end
 
-          -- source icons
-          vim_item.menu = ({
-            -- copilot =  " Copilot",
-            nvim_lsp = "⌘ LSP",
-            luasnip =  " Snippet",
-            buffer =   "𝌎 Buffer",
-            path =     "⎇ Path",
-            rg =       " Fuzzy",
-          })[entry.source.name]
-
-          return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
-        end
+        })
       },
 
       experimental = { ghost_text = { hl_group = "CmpGhostText" } },
