@@ -4,10 +4,10 @@
 local conf = {
   shell = function ()
     -- set default shell to powershell 7 on windows
-    if vim.fn.has("win32") or vim.fn.has("win64") then
-      if vim.fn.executable("pwsh.exe") then
+    if vim.fn.has("win32")==1 or vim.fn.has("win64")==1 then
+      if vim.fn.executable("pwsh.exe")==1 then
         return "pwsh.exe"
-      elseif vim.fn.executable("powershell") then
+      elseif vim.fn.executable("powershell")==1 then
         return "powershell.exe"
       end
     end
