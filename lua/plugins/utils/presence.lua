@@ -4,7 +4,7 @@
 
 return {
   "andweeb/presence.nvim",
-  event = "VeryLazy",
+  -- event = "VeryLazy",
   
   opts = {
      -- General options
