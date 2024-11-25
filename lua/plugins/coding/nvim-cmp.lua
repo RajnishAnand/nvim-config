@@ -16,12 +16,12 @@ return {
     "nvim-tree/nvim-web-devicons"
   },
 
-  
+
   opts = function()
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
     local cmp = require("cmp")
     local defaults = require("cmp.config.default")()
-    local luasnip = require("luasnip")
+    -- local luasnip = require("luasnip")
 
     -- local has_words_before = function()
     --   unpack = unpack or table.unpack
@@ -45,32 +45,13 @@ return {
         documentation = cmp.config.window.bordered(),
       },
 
-      mapping = {
-        ["<Down>"] = cmp.mapping.select_next_item(),
-        ["<Up>"] = cmp.mapping.select_prev_item(),
+      mapping = cmp.mapping.preset.insert({
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-e>"] = cmp.mapping.abort(),
+        ["<S-Tab>"] = cmp.mapping.complete(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ['<Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, {"i", "s"}),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-      },
+      }),
 
       sources = cmp.config.sources({
         { name = "codeium" },
@@ -81,9 +62,9 @@ return {
       }),
 
       formatting = {
-        fields = {"menu", "abbr", "kind"},
+        fields = { "kind", "abbr", "menu" },
         format = require('lspkind').cmp_format({
-          mode = "symbol_text",
+          mode = "symbol",
           maxwidth = {
             menu = 50,
             abbr = 50
@@ -103,16 +84,15 @@ return {
             -- source icons
             vim_item.menu = ({
               -- copilot =  " Copilot",
-              nvim_lsp = "⌘",
-              luasnip =  "",
-              buffer =   "𝌎",
-              path =     "⎇ ",
-              rg =       "",
-              codeium =  ""
+              nvim_lsp = "⌘ LSP",
+              luasnip =  " Snip",
+              buffer =   "𝌎 Buffer",
+              path =     "⎇ Path",
+              rg =       " Fuzzy",
+              codeium =  " Codeium"
             })[entry.source.name]
             return vim_item
           end
-
         })
       },
 
