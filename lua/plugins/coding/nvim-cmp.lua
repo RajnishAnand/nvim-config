@@ -10,7 +10,8 @@ return {
     "hrsh7th/cmp-buffer", -- buffer 
     "hrsh7th/cmp-path", -- path
     "saadparwaiz1/cmp_luasnip", -- snippets
-    "Exafunction/codeium.nvim", -- AI completion
+    -- "Exafunction/codeium.nvim", -- AI completion
+    "zbirenbaum/copilot-cmp", -- Copilot ai code completion
 
     "onsails/lspkind.nvim", -- lsp icons
     "nvim-tree/nvim-web-devicons"
@@ -54,6 +55,7 @@ return {
       }),
 
       sources = cmp.config.sources({
+        { name = "copilot"},
         { name = "codeium" },
         { name = "nvim_lsp" },
         { name = "luasnip" },
@@ -70,7 +72,10 @@ return {
             abbr = 50
           },
           ellipsis_char = "...",
-          symbol_map = { Codeium = ""},
+          symbol_map = { 
+            Codeium = "",
+            copilot = ""
+          },
           before = function(entry, vim_item)
             -- kind icons
             if vim.tbl_contains({ 'path' }, entry.source.name) then
@@ -83,13 +88,14 @@ return {
             end
             -- source icons
             vim_item.menu = ({
-              -- copilot =  " Copilot",
+              copilot =  " Copilot",
               nvim_lsp = "⌘ LSP",
               luasnip =  " Snip",
               buffer =   "𝌎 Buffer",
               path =     "⎇ Path",
               rg =       " Fuzzy",
-              codeium =  " Codeium"
+              codeium =  " Codeium",
+
             })[entry.source.name]
             return vim_item
           end

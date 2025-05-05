@@ -7,8 +7,7 @@ return {
       "nvim-lua/plenary.nvim",
   },
   config = function()
-    require("codeium").setup({
-    })
+    require("codeium").setup()
   end
 }
 

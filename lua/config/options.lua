@@ -4,9 +4,18 @@
 local opt = vim.opt
 local g = vim.g;
 
+opt.fileformat = 'unix'
 opt.list = true
--- opt.listchars:append "space:⋅" -- space visibility
-opt.listchars:append "eol:↴" -- enter key visibility
+opt.listchars:append( {
+  -- space: "⋅", -- space visibility
+  tab = '▸ ',
+  trail = '·',
+  extends = '>',
+  precedes = '<',
+  eol = '↵',
+  -- cr = '¬',
+})
+
 
 g.mapleader = " "
 g.maplocalleader = " "
