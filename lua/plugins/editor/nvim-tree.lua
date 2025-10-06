@@ -99,7 +99,7 @@ return {
         },
 
         trash = { cmd = "gio trash", require_confirm = true },
-        actions = {open_file = { quit_on_open = false,window_picker = { enable = false }}}
+        actions = {open_file = { quit_on_open = true,window_picker = { enable = false }}}
 
       }
   end,

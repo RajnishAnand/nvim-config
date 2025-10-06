@@ -6,6 +6,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   lazy = true,
 
+
   dependencies = {
     -- configuration manager 
     -- { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
@@ -13,25 +14,39 @@ return {
     -- { "folke/neodev.nvim", opts = {} },
 
     { "hrsh7th/cmp-nvim-lsp" },
+
     -- package manager for lsp
-    { "williamboman/mason.nvim" },
-    { "williamboman/mason-lspconfig.nvim" },
+    { "mason-org/mason.nvim", opts = {} },
+    "mason-org/mason-lspconfig.nvim",
   },
 
+
   opts = {
-
-    -- line diagnostic sings 
-    signs = {
-      { name = "DiagnosticSignError", text = "" },
-      { name = "DiagnosticSignWarn", text = "" },
-      { name = "DiagnosticSignHint", text = "" },
-      { name = "DiagnosticSignInfo", text = "" },
-    },
-
     -- inlay_hints = { enabled = true },
-
     -- options for vim.diagnostic.config()
     diagnostics = {
+    -- line diagnostic sings 
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = " ",
+          [vim.diagnostic.severity.WARN] = " ",
+          [vim.diagnostic.severity.INFO] = "󰋼 ",
+          [vim.diagnostic.severity.HINT] = "󰌵 ",
+        },
+        texthl = {
+          [vim.diagnostic.severity.ERROR] = "Error",
+          [vim.diagnostic.severity.WARN] = "Error",
+          [vim.diagnostic.severity.HINT] = "Hint",
+          [vim.diagnostic.severity.INFO] = "Info",
+        },
+        numhl = {
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
+          [vim.diagnostic.severity.HINT] = "",
+          [vim.diagnostic.severity.INFO] = "",
+        },
+      },
+
       underline = true,
       update_in_insert = false,
       severity_sort = true,
@@ -51,21 +66,10 @@ return {
         prefix = "",
       },
     },
-
-
-    -- TODO: find withs these options ownwards
-
-    -- -- Enable this to enable the builtin LSP inlay hints on Neovim >= 0.10.0
-    -- -- Be aware that you also will need to properly configure your LSP server to
-    -- -- provide the inlay hints.
-    -- inlay_hints = {
-    --   enabled = false,
-    -- },
-
   },
 
-  config = function(_, opts)
 
+  config = function(_, opts)
     -- lspInfo enable border
     require('lspconfig.ui.windows').default_options.border = 'single';
 
@@ -79,60 +83,63 @@ return {
     }
 
     local options = {
-      mason_lspconfig =require ("plugins.coding.lsp.mason-lspconfig"),
+      -- mason_lspconfig =require ("plugins.coding.lsp.mason-lspconfig"),
       mason = require ("plugins.coding.lsp.mason")
     }
 
+    ---------------------------------------------------------
+    ------------set up in order -----------------------------
+    ---------------------------------------------------------
 
-    -- set up in order --
-
-    -- 1.mason
+    -- STEP:1 mason
     ---@diagnostic disable-next-line : different-requires
     require("mason").setup(options.mason)
 
-    -- 2.mason_lspconfig
+
+    -- STEP:2 mason_lspconfig
     ---@diagnostic disable-next-line : different-requires
     local mason_lspconfig = require("mason-lspconfig")
-    mason_lspconfig.setup(options.mason_lspconfig)
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    mason_lspconfig.setup()
+    -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-    -- 3.setup servers : automatic 
-    mason_lspconfig.setup_handlers {
-      -- The first entry (without a key) will be the default handler
-      -- and will be called for each installed server that doesn't have
-      -- a dedicated handler.
-      function (server_name) -- default handler (optional)
-        require("lspconfig")[server_name].setup {
-          capabilities = capabilities,
-          handlers = handlers
-        }
-      end,
 
-      -- Next, you can provide a dedicated handler for specific servers.
-      -- For example, a handler override for the `lua_ls`:
-      ["lua_ls"] = function ()
-        local lspconfig = require("lspconfig")
-        lspconfig.lua_ls.setup {
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = { "vim" }
-              }
-            }
-          }
-        }
-      end,
+    -- STEP:3 setup servers : automatic 
+    -- mason_lspconfig.setup_handlers {
+    --   -- The first entry (without a key) will be the default handler
+    --   -- and will be called for each installed server that doesn't have
+    --   -- a dedicated handler.
+      -- function (server_name) -- default handler (optional)
+      --   require("lspconfig")[server_name].setup {
+      --     capabilities = capabilities,
+      --     handlers = handlers
+      --   }
+      -- end,
 
-    }
+    --   -- Next, you can provide a dedicated handler for specific servers.
+    --   -- For example, a handler override for the `lua_ls`:
+    --   ["lua_ls"] = function ()
+    --     local lspconfig = require("lspconfig")
+    --     lspconfig.lua_ls.setup {
+    --       settings = {
+    --         Lua = {
+    --           diagnostics = {
+    --             globals = { "vim" }
+    --           }
+    --         }
+    --       }
+    --     }
+    --   end,
+    --
+
+
 
     -- diagnostics 
     vim.diagnostic.config(opts.diagnostics)
-    for _, sign in ipairs(opts.signs) do
-      vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-    end
+
+
 
   end,
-
+  
   keys = {
     { "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
     { "gl", vim.diagnostic.open_float, desc= "Line Diagnostic"},
